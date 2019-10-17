@@ -294,7 +294,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-17T09:59:48+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-17T09:59:00+08:00">
                 2019-10-17
               </time>
             
@@ -335,22 +335,27 @@
         
           
             <p>The project needs to add a loading animation, so I wrote a text bouncing loading effect.</p>
-<h6 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;loading&quot;&gt;</span><br><span class="line">    &lt;span class=&quot;letter&quot;&gt;加&lt;/span&gt;</span><br><span class="line">    &lt;span class=&quot;letter&quot;&gt;载&lt;/span&gt;</span><br><span class="line">    &lt;span class=&quot;letter&quot;&gt;中&lt;/span&gt;</span><br><span class="line">    &lt;span class=&quot;letter&quot;&gt;...&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">###### CSS</span><br></pre></td></tr></table></figure>
+<ul>
+<li>html</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;loading&quot;&gt;</span><br><span class="line">    &lt;span class=&quot;letter&quot;&gt;加&lt;/span&gt;</span><br><span class="line">    &lt;span class=&quot;letter&quot;&gt;载&lt;/span&gt;</span><br><span class="line">    &lt;span class=&quot;letter&quot;&gt;中&lt;/span&gt;</span><br><span class="line">    &lt;span class=&quot;letter&quot;&gt;...&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 
-<p>#loading {<br>  display: flex;<br>  align-items: center;<br>  justify-content: center;<br>  width: 100%;<br>  height: 350px;<br>}<br>//每个字符添加的样式<br>.letter {<br>  animation: bounce 0.75s cubic-bezier(0.05, 0, 0.2, 1) infinite alternate;<br>  display: inline-block;<br>  transform: translate3d(0, 0, 0);<br>  color:rgb(7, 125, 204);<br>}<br>//动画效果<br>@keyframes bounce {<br>  0% {<br>    transform: translate3d(0, 0, 0);<br>  }<br>  100% {<br>    transform: translate3d(0, -0.5em, 0);<br>  }<br>}<br>.letter:nth-child(1) {<br>  animation-delay: 0s;<br>}<br>.letter:nth-child(2) {<br>  animation-delay: 0.08s;<br>}<br>.letter:nth-child(3) {<br>  animation-delay: 0.16s;<br>}<br>.letter:nth-child(4) {<br>  animation-delay: 0.24s;<br>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In this way, a simple text bouncing effect of the loading page has realized.</span><br><span class="line"></span><br><span class="line">Such CSS code is unfriendly.Because every time you add a character, you need to count the number of nth-child again and the animation-delay time.If you want to change the character of the loaded animation to &quot;data is loading, please wait...&quot; This redundant code is not easy to maintain, but also consumes performance.The animation delay effect has changed to implemente with native JS and a little ES6 syntax.</span><br><span class="line"></span><br><span class="line">###### JAVAScript</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CSS</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">#loading &#123;</span><br><span class="line">  display: flex;</span><br><span class="line">  align-items: center;</span><br><span class="line">  justify-content: center;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 350px;</span><br><span class="line">&#125;</span><br><span class="line">//每个字符添加的样式</span><br><span class="line">.letter &#123;</span><br><span class="line">  animation: bounce 0.75s cubic-bezier(0.05, 0, 0.2, 1) infinite alternate;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  transform: translate3d(0, 0, 0);</span><br><span class="line">  color:rgb(7, 125, 204);</span><br><span class="line">&#125;</span><br><span class="line">//动画效果</span><br><span class="line">@keyframes bounce &#123;</span><br><span class="line">  0% &#123;</span><br><span class="line">    transform: translate3d(0, 0, 0);</span><br><span class="line">  &#125;</span><br><span class="line">  100% &#123;</span><br><span class="line">    transform: translate3d(0, -0.5em, 0);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">.letter:nth-child(1) &#123;</span><br><span class="line">  animation-delay: 0s;</span><br><span class="line">&#125;</span><br><span class="line">.letter:nth-child(2) &#123;</span><br><span class="line">  animation-delay: 0.08s;</span><br><span class="line">&#125;</span><br><span class="line">.letter:nth-child(3) &#123;</span><br><span class="line">  animation-delay: 0.16s;</span><br><span class="line">&#125;</span><br><span class="line">.letter:nth-child(4) &#123;</span><br><span class="line">  animation-delay: 0.24s;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
 
-<script type="text/javascript">
-    window.onload=function(){
-        var letter = document.getElementsByClassName("letter");
-        for(let i=0;i<letter.length;i++){
-            var time = 0.08*[i];
-            letter[i].setAttribute('style','animation-delay:'+`${`${time}`+"s"}`);
-        }
-    }
-</script>
-<p>```<br>The animation effect is as follows:</p>
+<p>In this way, a simple text bouncing effect of the loading page has realized.</p>
+<p>Such CSS code is unfriendly.Because every time you add a character, you need to count the number of nth-child again and the animation-delay time.If you want to change the character of the loaded animation to “data is loading, please wait…” This redundant code is not easy to maintain, but also consumes performance.The animation delay effect has changed to implemente with native JS and a little ES6 syntax.This code dynamically adds animation delay time for each [.letter] class selector.<br>This approach can reduce the running time and improve the performance.</p>
+<ul>
+<li>JAVAScript</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">     window.onload=function()&#123;</span><br><span class="line">         var letter = document.getElementsByClassName(&quot;letter&quot;);</span><br><span class="line">         for(let i=0;i&lt;letter.length;i++)&#123;</span><br><span class="line">             var time = 0.08*[i];</span><br><span class="line">             letter[i].setAttribute(&apos;style&apos;,&apos;animation-delay:&apos;+`$&#123;`$&#123;time&#125;`+&quot;s&quot;&#125;`);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"> &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>The animation effect is as follows:</p>
 <p><img src="/images/loading-animation.png" alt></p>
+<p>Oct 17</p>
+<p>This js code doesn’t work on the mobile side, even though I converted it to ES5 syntax.Through the method of CSS achieve the effect in the end.</p>
 
           
         
